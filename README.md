@@ -10,9 +10,9 @@ Uma Aplicação basica para controle do tons musicais:
 
 ```bash
 # Baixe
-git clone https://github.com/MusiTons
+git clone https://github.com//MatheusWesley/MLAR
 # Entre
-cd electron-quick-start
+cd mTons
 # Instale
 npm install
 # Execute
