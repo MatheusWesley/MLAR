@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>MusiTons</title>
+  <!-- Stylesheets -->
+  <!-- <link rel="stylesheet" type="text/css" href="photon/css/photon.min.css"> -->
+  <!-- <link rel="stylesheet" href="photon/css/photon.css"> -->
+  <link rel="stylesheet" type="text/css" href="css/estilo.css">
+  <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.css">
+
+  <!-- Electron Javascript -->
+  <!-- <script src="photon/template-app/app.js" charset="utf-8"></script> -->
+  <script>
+    window.$ = window.jQuery = require('jquery');
+  </script>
+  <script src="controller.js"></script>
+  <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+</head>
+
+<body id="body">
+  <!-- Inicio da Janela -->
+  <div class="window">
+    <!-- Barra Inicial do App -->
+    <header class="navbar navbar-dark bg-dark">
+
+      <!--  Botões de Fechar -->
+      <div class="toolbar-actions">
+        <div class="btn-group pull-right">
+          <button id="btnMinus" class="btn btn-default">
+              <span class="icon icon-minus-squared"></span>
+            </button>
+          <button id="btnPlus" class="btn btn-default">
+              <span class="icon icon-plus-squared"></span>
+            </button>
+          <button id="btnCancel" class="btn btn-default">
+              <span class="icon icon-cancel-squared"></span>
+            </button>
+        </div>
+        <!--   Fim  -->
+        <h1 class="title">MusiTons</h1>
+      </div>
+      <div class="row">
+        <div class="col-lg-4">
+          <!-- DROPDOWN -->
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="icon icon-home"></span>Inicio</button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <span class="nav-group-item" @click="novoCadastro()">
+                <span class="icon icon-note-beamed"></span> Adicionar Registro
+              </span>
+              <span class="nav-group-item" @click="excluiMusica()">
+                <span class="icon icon-erase"></span> Excluir Registro
+              </span>
+
+            </div>
+            <!--  FIM DROPDOWN  -->
+          </div>
+        </div>
+          <div class="col-lg-4">
+            <div class="input-group">
+              <input type="text" id="pesquisa" class="form-control" placeholder="Procurando por..." aria-label="Procurando por...">
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" type="button" @click="pesquisaMusica()">Ir!</button>
+              </span>
+            </div>
+          </div>
+        </div>
+
+    </header>
+    <!-- Informações da Janela -->
+    <div class="window-content">
+      <div class="pane-group">
+        <div class="pane">
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <!-- <th>Id</th> -->
+                <th>Musica</th>
+                <th>Arstista</th>
+                <th>Vocalista</th>
+                <th>2º Vocalista</th>
+                <th>Tom</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="tbl_musicas  in tbl_musicas">
+                <!-- <td>{{tbl_musicas.$loki}}</td> -->
+                <td>{{tbl_musicas.musica}}</td>
+                <td>{{tbl_musicas.artista}}</td>
+                <td>{{tbl_musicas.vocalista}}</td>
+                <td>{{tbl_musicas.vocalista2}}</td>
+                <td>{{tbl_musicas.tom}}</td>
+                <!-- Criando o Botão de Alterar -->
+                <td>
+                  <span class="icon icon-pencil" @click="editaCadastro(tbl_musicas)">
+                           Editar
+                         </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <footer class="toolbar toolbar-footer">
+      <h1 class="title">MLAR inc.</h1>
+    </footer>
+    </div>
+    <!-- Criando o Modal para alteração de dados  -->
+    <div id="modal" v-if="openModal">
+      <div class="wrap">
+        <form id="cadastroMusicas" action="" class="pane-body">
+          <h3 v-if="mode=='novaMusica'">Novo Cadastro</h3>
+          <h3 v-if="mode=='editaMusica'">Alterar Cadastro</h3>
+          <p class="obriga">* Obrigatório</p>
+          <div class="form-group">
+            <input type="text" id="musica" v-model="cadastro.musica" class="form-control" placeholder="Musica*" required/>
+          </div>
+          <div class="form-group">
+            <input type="text" id="artista" v-model="cadastro.artista" class="form-control" placeholder="Artista*" required />
+          </div>
+          <div class="form-group">
+            <!-- <input type="text" id="vocalista" v-model="cadastro.vocalista" class="form-control" placeholder="Vocalista" /> -->
+            <label for="vocalista">Quem Será o Vocalista?*</label>
+            <select class="form-control" id="vocalista" required v-model="cadastro.vocalista" name="vocalista">
+                      <option>Todos</option>
+                      <option>Josilmar</option>
+                      <option>Higor</option>
+                      <option>Eline</option>
+                      <option>Joyce</option>
+                      <option>Larissy</option>
+                      <option>Jamilly</option>
+                      <option>Manassés</option>
+                      <option>Vitória</option>
+                      <option>Tânia</option>
+                      <option>Outro</option>
+                      </select>
+          </div>
+          <div class="form-group">
+            <!-- <input type="text" id="vocalista" v-model="cadastro.vocalista" class="form-control" placeholder="Vocalista" /> -->
+            <label for="vocalista2">Outro vocalista?</label>
+            <select class="form-control" id="vocalista2" v-model="cadastro.vocalista2" name="vocalista2">
+                      <option>Todos</option>
+                      <option>Josilmar</option>
+                      <option>Higor</option>
+                      <option>Eline</option>
+                      <option>Joyce</option>
+                      <option>Larissy</option>
+                      <option>Jamilly</option>
+                      <option>Manassés</option>
+                      <option>Vitória</option>
+                      <option>Tânia</option>
+                      <option>Outro</option>
+                      </select>
+          </div>
+          <div class="form-group">
+            <!-- <input type="text" id="tom" v-model="cadastro.tom" class="form-control" placeholder="Tom" /> -->
+            <label for="tom">Qual Tom?*</label>
+            <select class="form-control" id="tom" v-model="cadastro.tom" name="tom" required>
+                      <option>C</option>
+                      <option>D</option>
+                      <option>E</option>
+                      <option>F</option>
+                      <option>G</option>
+                      <option>A</option>
+                      <option>B</option>
+                    </select>
+          </div>
+          <button type="button" @click="insereOuAlteraMusica" class="btn btn-large btn-positive">
+                    Gravar
+                  </button>
+          <button type="button" class="btn btn-large btn-negative" @click="openModal = false">
+                    Fechar
+                  </button>
+        </form>
+      </div>
+    </div>
+    <!-- MODAL DE EXPCLUSÃO DE MUSICAS -->
+    <div id="modalExclusao" v-if="openModalExclusao">
+      <div class="wrap">
+        <form id="excluiMusica" action="" class="pane-body">
+          <h3>Exclusão</h3>
+          <h4>Escreva o nome do registo a apagar e clique em confirmar!</h4>
+          <p class="obriga">* Escreva exatamente como está cadastrado! Musica != musica</p>
+          <div class="form-group">
+            <input type="text" name="excluirMusica" id="exclua" class="form-control" value="" placeholder="Confirme a musica que deseja excluir">
+          </div>
+          <div class="btCentra">
+            <button type="button" @click="excluir" class="btn btn-large btn-negative">
+                    Confirmar
+                  </button>
+            <button type="button" class="btn btn-large btn-warning" @click="openModalExclusao = false">
+                    Cancelar
+                  </button>
+          </div>
+        </form>
+      </div>
+    </div>
+</body>
+<script type="text/javascript" src="js/index.js">
+</script>
+
+</html>

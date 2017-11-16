@@ -1,0 +1,12 @@
+tela login
+ - No fundo a marca do MLAR
+ - Cadastro do Admin
+ - Cadastro de leitura
+ - log do usuario
+Outros
+ - Colocar em ordem alfabetica
+ - Inserir o Link do Slide
+   + Botão do lado de Editar
+ - Aba para Hinos da Harpa
+ - Aba para a Biblia
+ - Implemantar o botão sobre

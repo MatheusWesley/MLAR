@@ -1,0 +1,31 @@
+{
+  "name": "mTons",
+  "version": "1.0.5",
+  "description": "Tons de Musicas, é aqui!",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-packager ./mTons.v1.0.5/ mTons --platform=win-arch=ia32 --version=1.7.8 --icon=icon/m2.ico --overwrite"
+  },
+  "repository": "",
+  "keywords": [
+    "Electron",
+    "quick",
+    "start",
+    "tutorial",
+    "demo"
+  ],
+  "author": "MLAR inc",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "~1.7.8",
+    "electron-packager": "^9.1.0"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.2.1",
+    "lokijs": "^1.5.1",
+    "read-file-utf8": "^1.1.1",
+    "vue": "^1.0.28"
+  }
+}

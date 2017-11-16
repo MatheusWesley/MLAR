@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>MusiTons - Cantores </title>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="photon/css/photon.min.css">
+    <link rel="stylesheet" href="photon/css/photon.css">
+    <link rel="stylesheet" type="text/css" href="css/estilo.css">
+
+    <!-- Botoes de Fechar Maximizar e Minimizar -->
+    <script>window.$ = window.jQuery = require('jquery');</script>
+    <script src="controller.js"></script>
+
+  </head>
+  <body>
+    <!-- Inicio da Janela -->
+    <div class="window">
+      <!-- Barra Inicial do App -->
+       <header class="toolbar toolbar-header">
+
+          <!--  Botões de Fechar -->
+        <div class="toolbar-actions">
+          <div class="btn-group pull-right">
+            <button id="btnMinus" class="btn btn-default">
+              <span class="icon icon-minus-squared"></span>
+            </button>
+            <button id="btnPlus" class="btn btn-default">
+              <span class="icon icon-plus-squared"></span>
+            </button>
+            <button id="btnCancel" class="btn btn-default">
+              <span class="icon icon-cancel-squared"></span>
+            </button>
+          </div>
+          <!--   Fim  -->
+          <h1 class="title">MusiTons</h1>
+        </div>
+        </header>
+      <!-- Informações da Janela -->
+      <div class="window-content">
+         <div class="pane-group">
+              <div class="pane-sm sidebar">
+                <nav class="nav-group">
+                  <h5 class="nav-group-title">Menu</h5>
+                  <a class="nav-group-item active" href="#">
+                    <span class="icon icon-home"></span>
+                    Inicio
+                  </a>
+
+                  <span class="nav-group-item" @click="novoCadastro()">
+                    <span class="icon icon-note-beamed"></span>
+                    Adicionar Musica
+                  </span>
+                  <a class="nav-group-item" href="cantores.html">
+                    <span class="icon icon-mic"></span>
+                    Cadastrar Cantores
+                  </a>
+                </nav>
+              </div>
+              <div class="pane">
+                <table class="table table-striped">
+                  <caption>Cadastros Realizados</caption>
+                  <thead>
+                    <tr>
+                      <th>Musica</th>
+                      <th>Arstista</th>
+                      <th>Vocalista</th>
+                      <th>Tom</th>
+                        <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for= "tbl_musicas  in tbl_musicas">
+                      <td>{{tbl_musicas.musica}}</td>
+                      <td>{{tbl_musicas.artista}}</td>
+                      <td>{{tbl_musicas.vocalista}}</td>
+                      <td>{{tbl_musicas.tom}}</td>
+                      <!-- Criando o Botão de Alterar -->
+                      <td>
+                        <!--
+                        <button type="button" name="button" class="btn btn-warning" @click="editaCadastro(tbl_musicas)">
+                          Editar
+                        </button>
+                      -->
+                        <span class="icon icon-pencil" @click="editaCadastro(tbl_musicas)">
+                           Editar -
+                         </span>
+                         <span class="icon icon-cancel">
+                            Excluir
+                         </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+              </div>
+          </div>
+        </div>
+        <footer class="toolbar toolbar-footer">
+            <h1 class="title">MLAR inc.</h1>
+         </footer>
+    </div>
+  </body>
+
+  <script>
+      var read = require('read-file-utf8')
+      var loki = require('lokijs');
+      var db = new loki('db.json');
+      var data = read(__dirname + '/db.json');
+      window.Vue = require('vue');
+      db.loadJSON(data);
+
+      // Criando tabela
+      var tbl_musicas = db.getCollection('tbl_musicas');
+      console.log(db);
+      new Vue({
+        el: 'body',
+        data: {
+
+        }
+     });
+  </script>
+</html>

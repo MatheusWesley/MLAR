@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <title>Tons Musicais</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" type="text/css" href="css/estilo.css">
+  <link href="node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+
+  <!-- Javascript -->
+  <script>
+    window.$ = window.jQuery = require('jquery');
+  </script>
+</head>
+
+<body id="body">
+  <!-- Barra de Navegação -->
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <!-- Titulo do Aplicativo -->
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">mTons</a>
+      </div>
+      <!-- MENU FEITO COM DROPDOWN E BARRA DE PESQUISA -->
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              Menu<span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="#" data-toggle="modal" data-target=".bs-example-modal-lg" @click="novoCadastro()">Novo Registro</a></li>
+              <li class="dropdown-header">Mais</li>
+              <li><a href="#" @click="excluiMusica()">Excluir Registro</a></li>
+            </ul>
+          </li>
+        </ul>
+        <form class="navbar-form navbar-left" role="search">
+          <div class="input-group">
+            <input type="text" id="pesquisa" class="form-control" placeholder="Procurando por..." aria-label="Procurando por...">
+            <span class="input-group-btn">
+            <button class="btn btn-primary" type="submit" @click="pesquisaMusica(pesquisa)">Ir!</button>
+          </span>
+          </div>
+        </form>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+  </nav>
+  <br><br><br>
+  <!-- Corpo -->
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <!-- <th>Id</th> -->
+        <th>Musica</th>
+        <th>Arstista</th>
+        <th>Vocalista</th>
+        <th>2º Vocalista</th>
+        <th>Tom</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="tbl_musicas  in tbl_musicas">
+        <td id="prmusica" @click=abreArquivo()>{{tbl_musicas.musica}}</td>
+        <td>{{tbl_musicas.artista}}</td>
+        <td>{{tbl_musicas.vocalista}}</td>
+        <td>{{tbl_musicas.vocalista2}}</td>
+        <td>{{tbl_musicas.tom}}</td>
+        <!-- Criando o Botão de Alterar -->
+        <td>
+          <span class="glyphicon glyphicon-pencil" data-toggle="modal" data-target=".bs-example-modal-lg" @click="editaCadastro(tbl_musicas)">
+            Editar</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- Modais -->
+  <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <form id="cadastroMusicas" action="" class="pane-body">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="gridSystemModalLabel" v-if="mode=='novaMusica'">Novo Cadastro</h4>
+            <h4 class="modal-title" id="gridSystemModalLabel" v-if="mode=='editaMusica'">Alterar Cadastro</h4>
+          </div>
+          <br>
+          <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>* Obrigatório!</strong>
+          </div>
+          <div class="form-group">
+            <input type="text" id="musica" v-model="cadastro.musica" class="form-control" placeholder="Musica*" required/>
+          </div>
+          <div class="form-group">
+            <input type="text" id="artista" v-model="cadastro.artista" class="form-control" placeholder="Artista*" required />
+          </div>
+          <div class="form-group">
+            <!-- <input type="text" id="vocalista" v-model="cadastro.vocalista" class="form-control" placeholder="Vocalista" /> -->
+            <label for="vocalista">Quem Será o Vocalista?*</label>
+            <select class="form-control" id="vocalista" required v-model="cadastro.vocalista" name="vocalista">
+                      <option>Todos</option>
+                      <option>Josilmar</option>
+                      <option>Higor</option>
+                      <option>Eline</option>
+                      <option>Joyce</option>
+                      <option>Larissy</option>
+                      <option>Jamilly</option>
+                      <option>Manassés</option>
+                      <option>Vitória</option>
+                      <option>Tânia</option>
+                      <option>Outro</option>
+                    </select>
+          </div>
+          <div class="form-group">
+            <!-- <input type="text" id="vocalista" v-model="cadastro.vocalista" class="form-control" placeholder="Vocalista" /> -->
+            <label for="vocalista2">Outro vocalista?</label>
+            <select class="form-control" id="vocalista2" v-model="cadastro.vocalista2" name="vocalista2">
+                      <option>Todos</option>
+                      <option>Josilmar</option>
+                      <option>Higor</option>
+                      <option>Eline</option>
+                      <option>Joyce</option>
+                      <option>Larissy</option>
+                      <option>Jamilly</option>
+                      <option>Manassés</option>
+                      <option>Vitória</option>
+                      <option>Tânia</option>
+                      <option>Outro</option>
+                      </select>
+          </div>
+          <div class="form-group">
+            <!-- <input type="text" id="tom" v-model="cadastro.tom" class="form-control" placeholder="Tom" /> -->
+            <label for="tom">Qual Tom?*</label>
+            <select class="form-control" id="tom" v-model="cadastro.tom" name="tom" required>
+                      <option>C</option>
+                      <option>D</option>
+                      <option>E</option>
+                      <option>F</option>
+                      <option>G</option>
+                      <option>A</option>
+                      <option>B</option>
+                    </select>
+          </div>
+          <div class="form-group">
+          <label for="">Tem slide?</label>
+          <input type="file" id="slide">
+          <p class="help-block">Selecione o slide da musica cadastrada.</p>
+      </div>
+      <button type="button" data-dismiss="modal" @click="insereOuAlteraMusica" class="btn btn-large btn-success">
+                    Gravar
+                  </button>
+      <button type="button" class="btn btn-large btn-danger" data-dismiss="modal">
+                    Fechar
+                  </button>
+      </form>
+    </div>
+  </div>
+  </div>
+  <!-- JavaScript
+    ================================================== -->
+  <script type="text/javascript" src="js/index.js"></script>
+  <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+    $('#myModal').on('shown.bs.modal', function() {
+      $('#myInput').focus()
+    })
+  </script>
+</body>
+
+</html>
