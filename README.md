@@ -22,5 +22,7 @@ npm start
 
 ## Novidades
 
-- Implementado a Função Pesquisa
-- Realizado uma mudança total na interface, deixando-a mais limpa e de facil entendimento.
+- Implementado a Função Pesquisa.
+- Realizado uma mudança total na interface, deixando-a mais limpa e de fácil entendimento.
+- Implementado função de login.
+- Adicionado efeitos de modal do bootstrap nas telas.

@@ -10,3 +10,10 @@ Outros
  - Aba para Hinos da Harpa
  - Aba para a Biblia
  - Implemantar o botão sobre
+ 
+ 
+ Icones
+ glyphicon glyphicon-qrcode - senha
+ glyphicon glyphicon-user - usuario
+ 
+ caracter de espaco - &nbsp; 
