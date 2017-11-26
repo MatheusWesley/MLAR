@@ -1,0 +1,83 @@
+{
+  "filename": "conf/banco.json",
+  "collections": [{
+    "name": "tbl_cadastro",
+    "data": [{
+      "nome": "ADMIN",
+      "email": "admin@mlar.com",
+      "senha": "admin2017",
+      "meta": {
+        "revision": 0,
+        "created": 1511650982854,
+        "version": 0
+      },
+      "$loki": 1
+    }, {
+      "nome": "user",
+      "email": "user@mlar.com",
+      "senha": "123",
+      "meta": {
+        "revision": 0,
+        "created": 1511651000135,
+        "version": 0
+      },
+      "$loki": 2
+    }],
+    "idIndex": [1, 2],
+    "binaryIndices": {},
+    "constraints": null,
+    "uniqueNames": [],
+    "transforms": {},
+    "objType": "tbl_cadastro",
+    "dirty": true,
+    "cachedIndex": null,
+    "cachedBinaryIndex": null,
+    "cachedData": null,
+    "adaptiveBinaryIndices": true,
+    "transactional": false,
+    "cloneObjects": false,
+    "cloneMethod": "parse-stringify",
+    "asyncListeners": false,
+    "disableChangesApi": true,
+    "disableDeltaChangesApi": true,
+    "autoupdate": false,
+    "serializableIndices": true,
+    "ttl": null,
+    "maxId": 2,
+    "DynamicViews": [],
+    "events": {
+      "insert": [null],
+      "update": [null],
+      "pre-insert": [],
+      "pre-update": [],
+      "close": [],
+      "flushbuffer": [],
+      "error": [],
+      "delete": [null],
+      "warning": [null]
+    },
+    "changes": []
+  }],
+  "databaseVersion": 1.5,
+  "engineVersion": 1.5,
+  "autosave": false,
+  "autosaveInterval": 5000,
+  "autosaveHandle": null,
+  "throttledSaves": true,
+  "options": {
+    "serializationMethod": "normal",
+    "destructureDelimiter": "$<\n"
+  },
+  "persistenceMethod": "fs",
+  "persistenceAdapter": null,
+  "verbose": false,
+  "events": {
+    "init": [null],
+    "loaded": [],
+    "flushChanges": [],
+    "close": [],
+    "changes": [],
+    "warning": []
+  },
+  "ENV": "NODEJS"
+}
