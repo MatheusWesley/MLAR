@@ -1,3 +1,4 @@
+//import login from "login.js";
 // Script de pagina index.html
 // Responsavel pela conexão com o Banco de Dados
 // E algumas ações comportamentais
@@ -7,18 +8,24 @@
 var read = require('read-file-utf8')
 var loki = require('lokijs');
 var db = new loki('db.json');
+var banco = new loki('conf/banco.json');
 var data = read(__dirname + '/db.json');
+var dataLogin = read(__dirname + '/login.json');
 window.Vue = require('vue');
 db.loadJSON(data);
+banco.loadJSON(dataLogin);
+
 
 // Criando tabela (Collection)
 var tbl_musicas = db.getCollection('tbl_musicas');
+var tbl_cadastro = banco.getCollection('tbl_cadastro');
 console.log(db);
 new Vue({
   el: '#body',
   data: {
     tbl_musicas: [],
     mode: '',
+    user: '', // Definindo um nome padrão para o usuario
     cadastro: {
       musica: '',
       artista: '',
@@ -86,15 +93,27 @@ new Vue({
       pesquisa = $("#pesquisa").val();
       result = tbl_musicas.find({'musica': { '$contains' : pesquisa }});
       this.tbl_musicas = result;
-      //console.log(this.tbl_musicas);
-        //console.log(result);
-      //alert('Botão em Manutenção');
     },
     abreArquivo: function () {
       slide = $("#slide").val();
       arquivo = tbl_musicas.find({'slide': { '$eq' : slide }});
       console.log(this.tbl_musicas);
 
+    },
+    fazerLogin: function() {
+      vNome = $("#vNome").val();
+      vSenha = $("#vSenha").val();
+      //result = tbl_cadastro.find({'nome': { '$eq' : vNome }} && {'senha': { '$eq' : vSenha }});
+      if (tbl_cadastro.find({'nome': { '$eq' : vNome }}) == false) {
+        alert('Usuario '+ vNome +' digitado está incorreto');
+      } else if (tbl_cadastro.find({'senha': { '$eq' : vSenha }}) == false) {
+          alert('Senha digitada está incorreta');
+      }else{
+          console.log('Nome: ' + vNome);
+          console.log('Senha: ' + vSenha);
+          console.log('Tudo ok');
+          $('.modalLogin').modal('hide');
+        }
     }
   }
 
