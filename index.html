@@ -8,7 +8,7 @@
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" type="text/css" href="css/estilo.css">
   <link href="node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-
+  <link href="css/signin.css" rel="stylesheet">
   <!-- Javascript -->
   <script>
     window.$ = window.jQuery = require('jquery');
@@ -21,7 +21,7 @@
     <div class="container-fluid">
       <!-- Titulo do Aplicativo -->
       <div class="navbar-header">
-        <a class="navbar-brand" href="#">mTons</a>
+        <span class="navbar-brand">mTons</span>
       </div>
       <!-- MENU FEITO COM DROPDOWN E BARRA DE PESQUISA -->
       <div class="collapse navbar-collapse">
@@ -31,13 +31,13 @@
               Menu<span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-              <li><a href="#" data-toggle="modal" data-target=".bs-example-modal-lg" @click="novoCadastro()">Novo Registro</a></li>
+              <li><a href="#" data-toggle="modal" data-target=".modalCadastro" @click="novoCadastro()">Novo Registro</a></li>
               <li class="dropdown-header">Mais</li>
-              <li><a href="#" @click="excluiMusica()">Excluir Registro</a></li>
+              <li><a href="#" data-toggle="modal" data-target=".modalExclusao" @click="excluiMusica()">Excluir Registro</a></li>
             </ul>
           </li>
         </ul>
-        <form class="navbar-form navbar-left" role="search">
+        <form action="#" class="navbar-form navbar-left" role="search">
           <div class="input-group">
             <input type="text" id="pesquisa" class="form-control" placeholder="Procurando por..." aria-label="Procurando por...">
             <span class="input-group-btn">
@@ -45,6 +45,16 @@
           </span>
           </div>
         </form>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{user}}&nbsp;&nbsp;<span class="glyphicon glyphicon-log-in"></span></a>
+            <ul class="dropdown-menu">
+              <li><a data-toggle="modal" data-target=".modalLogin" href="#">Mudar Usuario</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#" class="btnCancel">&nbsp;Sair</a></li>
+            </ul>
+          </li>
+        </ul>
       </div>
       <!-- /.navbar-collapse -->
     </div>
@@ -73,17 +83,17 @@
         <td>{{tbl_musicas.tom}}</td>
         <!-- Criando o Botão de Alterar -->
         <td>
-          <span class="glyphicon glyphicon-pencil" data-toggle="modal" data-target=".bs-example-modal-lg" @click="editaCadastro(tbl_musicas)">
+          <span class="glyphicon glyphicon-pencil" data-toggle="modal" data-target=".modalCadastro" @click="editaCadastro(tbl_musicas)">
             Editar</span>
         </td>
       </tr>
     </tbody>
   </table>
   <!-- Modais -->
-  <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal fade modalCadastro" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
-        <form id="cadastroMusicas" action="" class="pane-body">
+        <form id="cadastroMusicas" action="#" class="pane-body">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="gridSystemModalLabel" v-if="mode=='novaMusica'">Novo Cadastro</h4>
@@ -148,28 +158,85 @@
                     </select>
           </div>
           <div class="form-group">
-          <label for="">Tem slide?</label>
-          <input type="file" id="slide">
-          <p class="help-block">Selecione o slide da musica cadastrada.</p>
-      </div>
-      <button type="button" data-dismiss="modal" @click="insereOuAlteraMusica" class="btn btn-large btn-success">
+            <label for="">Tem slide?</label>
+            <input type="file" id="slide">
+            <p class="help-block">Selecione o slide da musica cadastrada.</p>
+          </div>
+          <button type="button" data-dismiss="modal" @click="insereOuAlteraMusica" class="btn btn-large btn-success">
                     Gravar
                   </button>
-      <button type="button" class="btn btn-large btn-danger" data-dismiss="modal">
+          <button type="button" class="btn btn-large btn-danger" data-dismiss="modal">
                     Fechar
                   </button>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
+  <!-- FIM MODAL CADASTRO -->
+  <div class="modal fade modalExclusao" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <form id="excluiMusica" action="" class="pane-body">
+          <h3>Exclusão</h3>
+          <h4>Escreva o nome do registo a apagar e clique em confirmar!</h4>
+          <div class="alert alert-danger" role="alert">
+            <p><strong>Atenção!</strong> Após a exclusão este processo não poderar ser revertido!</p>
+            <p>* Escreva exatamente como está cadastrado! Musica != musica</p>
+          </div>
+          <div class="form-group">
+            <input type="text" name="excluirMusica" id="exclua" class="form-control" value="" placeholder="Confirme a musica que deseja excluir">
+          </div>
+          <div class="btCentra">
+            <button type="button" @click="excluir" class="btn btn-large btn-danger">
+                  Confirmar
+                </button>
+            <button type="button" class="btn btn-large btn-default" data-dismiss="modal">
+                  Cancelar
+                </button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
+  <!-- FIM MODAL EXCLUSAO -->
+  <!-- MODAL DE LOGIN -->
+  <div class="modal modalLogin" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="exampleModalLabel">Fazer login</h4>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="nome">Nome</label>
+              <input type="text" class="form-control" id="vNome" v-model="user" placeholder="Nome de usuario...">
+            </div>
+            <div class="form-group">
+              <label for="senha">Senha</label>
+              <input type="password" class="form-control" id="vSenha" placeholder="Sua senha">
+            </div>
+            <button type="button" class="btn btn-default btnCancel">Sair</button>
+            <button type="submit" @click="fazerLogin()" class="btn btn-primary">Entrar</button>
+          </form>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- FIM MODAL LOGIN -->
+
   <!-- JavaScript
     ================================================== -->
   <script type="text/javascript" src="js/index.js"></script>
+  <script type="text/javascript" src="js/controller.js"></script>
   <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
   <script type="text/javascript">
     $('#myModal').on('shown.bs.modal', function() {
       $('#myInput').focus()
     })
+    $('.modalLogin').modal('show');
   </script>
 </body>
 
