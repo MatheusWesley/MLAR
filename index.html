@@ -201,7 +201,7 @@
   <!-- FIM MODAL EXCLUSAO -->
   <!-- MODAL DE LOGIN -->
   <div class="modal modalLogin" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" data-backdrop="static">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-sm" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" id="exampleModalLabel">Fazer login</h4>
@@ -216,8 +216,10 @@
               <label for="senha">Senha</label>
               <input type="password" class="form-control" id="vSenha" placeholder="Sua senha">
             </div>
-            <button type="button" class="btn btn-default btnCancel">Sair</button>
-            <button type="submit" @click="fazerLogin()" class="btn btn-primary">Entrar</button>
+            <div class="btCentra">
+              <button type="button" class="btn btn-default btnCancel">Sair</button>
+              <button type="button" @click="fazerLogin()" class="btn btn-primary">Entrar</button>
+            </div>
           </form>
         </div>
       </div>
