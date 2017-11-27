@@ -25,7 +25,7 @@ new Vue({
   data: {
     tbl_musicas: [],
     mode: '',
-    user: '', // Definindo um nome padrão para o usuario
+    user: 'ADMIN', // Definindo um nome padrão para o usuario
     cadastro: {
       musica: '',
       artista: '',
