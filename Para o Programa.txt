@@ -3,6 +3,7 @@ tela login
  - Cadastro do Admin
  - Cadastro de leitura
  - log do usuario
+ - tempo logado 10min
 Outros
  - Colocar em ordem alfabetica
  - Inserir o Link do Slide
