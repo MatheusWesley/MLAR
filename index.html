@@ -23,28 +23,39 @@
       <div class="navbar-header">
         <span class="navbar-brand">mTons</span>
       </div>
-      <!-- MENU FEITO COM DROPDOWN E BARRA DE PESQUISA -->
+      <!-- Menu -->
       <div class="collapse navbar-collapse">
+        <!-- Dropdown -->
         <ul class="nav navbar-nav">
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
               Menu<span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-              <li><a href="#" data-toggle="modal" data-target=".modalCadastro" @click="novoCadastro()">Novo Registro</a></li>
-              <li class="dropdown-header">Mais</li>
-              <li><a href="#" data-toggle="modal" data-target=".modalExclusao" @click="excluiMusica()">Excluir Registro</a></li>
+              <ul class="nav nav-list">
+                <li class="active">
+                  <a href="#listMusicas" data-toggle="tab">Musicas</a>
+                </li>
+                <li>
+                  <a href="#listHarpa" data-toggle="tab">Hinos da Harpa</a>
+                </li>
+                <li>
+                  <a href="#listBiblia" data-toggle="tab">Biblia</a>
+                </li>
+              </ul>
             </ul>
           </li>
         </ul>
-        <form action="#" class="navbar-form navbar-left" role="search">
+        <!-- Barra de Pesquisa -->
+        <div class="navbar-form navbar-left">
           <div class="input-group">
             <input type="text" id="pesquisa" class="form-control" placeholder="Procurando por..." aria-label="Procurando por...">
             <span class="input-group-btn">
-            <button class="btn btn-primary" type="submit" @click="pesquisaMusica(pesquisa)">Ir!</button>
+            <button class="btn btn-primary" type="button" @click="pesquisaMusica(pesquisa)">Ir!</button>
           </span>
           </div>
-        </form>
+        </div>
+        <!-- Seleção do Usuario -->
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{user}}&nbsp;&nbsp;<span class="glyphicon glyphicon-log-in"></span></a>
@@ -60,36 +71,95 @@
     </div>
     <!-- /.container-fluid -->
   </nav>
-  <br><br><br>
+  <br>
   <!-- Corpo -->
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <!-- <th>Id</th> -->
-        <th>Musica</th>
-        <th>Arstista</th>
-        <th>Vocalista</th>
-        <th>2º Vocalista</th>
-        <th>Tom</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="tbl_musicas  in tbl_musicas">
-        <td id="prmusica" @click=abreArquivo()>{{tbl_musicas.musica}}</td>
-        <td>{{tbl_musicas.artista}}</td>
-        <td>{{tbl_musicas.vocalista}}</td>
-        <td>{{tbl_musicas.vocalista2}}</td>
-        <td>{{tbl_musicas.tom}}</td>
-        <!-- Criando o Botão de Alterar -->
-        <td>
-          <span class="glyphicon glyphicon-pencil" data-toggle="modal" data-target=".modalCadastro" @click="editaCadastro(tbl_musicas)">
-            Editar</span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <!-- *************************************************************************************** -->
+  <div class="tab-content">
+    <!-- Lista de MUSICAS -->
+    <div class="tab-pane active" id="listMusicas">
+      <!-- BOTOES DE AÇAO -->
+      &nbsp;&nbsp;&nbsp;
+      <div class="btn-group" role="group" aria-label="">
+        <button type="button" class="btn btn-xs btn-primary">
+          <span href="#" data-toggle="modal" data-target=".modalCadastro" @click="novoCadastro()">Novo Registro</span>
+        </button>
+        <button type="button" class="btn btn-xs btn-danger">
+          <span href="#" data-toggle="modal" data-target=".modalExclusao" @click="excluiMusica()">Excluir Registro</span>
+        </button>
+      </div>
+      <br><br>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <!-- <th>Id</th> -->
+            <th>Musica</th>
+            <th>Arstista</th>
+            <th>Vocalista</th>
+            <th>2º Vocalista</th>
+            <th>Tom</th>
+            <th>-</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="tbl_musicas  in tbl_musicas">
+            <td id="prmusica">{{tbl_musicas.musica}}</td>
+            <td>{{tbl_musicas.artista}}</td>
+            <td>{{tbl_musicas.vocalista}}</td>
+            <td>{{tbl_musicas.vocalista2}}</td>
+            <td>{{tbl_musicas.tom}}</td>
+            <!-- Criando o Botão de Alterar -->
+            <td>
+              <div class="btn-group" role="group" aria-label="">
+                <button type="button" class="btn btn-xs btn-info">
+                    <span class="glyphicon glyphicon-pencil" data-toggle="modal" data-target=".modalCadastro" @click="editaCadastro(tbl_musicas)">
+                      Editar</span>
+                  </button>
+                <button type="button" class="btn btn-xs btn-warning">
+                    <span @click=abreArquivo()>Abrir Slide</span>
+                  </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- Lista HINOS DA HARPA -->
+    <div class="tab-pane" id="listHarpa">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Numero</th>
+            <th>Titulo</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Chuvas de Graça</td>
+            <td>
+              <div class="btn-group" role="group" aria-label="">
+                <button type="button" class="btn btn-xs btn-info">
+                    <span>
+                      Vizualizar</span>
+                  </button>
+                <button type="button" class="btn btn-xs btn-warning">
+                    <span>Alterar</span>
+                  </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- Lista Livros da Biblia -->
+    <div class="tab-pane" id="listBiblia">
+      <p>Biblia Sagrada</p>
+      <a href="css">click</a>
+    </div>
+  </div>
   <!-- Modais -->
+  <!-- *************************************************************************************************** -->
   <div class="modal fade modalCadastro" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
@@ -111,7 +181,6 @@
             <input type="text" id="artista" v-model="cadastro.artista" class="form-control" placeholder="Artista*" required />
           </div>
           <div class="form-group">
-            <!-- <input type="text" id="vocalista" v-model="cadastro.vocalista" class="form-control" placeholder="Vocalista" /> -->
             <label for="vocalista">Quem Será o Vocalista?*</label>
             <select class="form-control" id="vocalista" required v-model="cadastro.vocalista" name="vocalista">
                       <option>Todos</option>
